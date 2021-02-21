@@ -1,0 +1,170 @@
+
+CHANGELOG
+
+i (Ville Helin) admit, i didn't write tile driller completely myself.
+;) thanks to boo_boo for lots of code seen in 1.8 (the logic for
+background color and the fix for BMP files)! and thanks to setok for
+good ideas. and pasi kallinen is responsible of most of the very cool
+features in 2.1! nice!
+
+Authors in the HISTORY chapter:
+
+* Ville Helin
+b boo_boo
+p Pasi Kallinen
+
+
+HISTORY
+
+v2.2 (06-Apr-2007): * reading of grayscale PNGs should work.
+                    * added new drawing tools: 3x3 pen, 5x5 pen,
+                      and 7x7 pen.
+                    * removed line, rectangle and circle drawing
+                      tools as they just didn't work.
+                    * when using alt to change the tools, the editor
+                      window's status line is also refreshed.
+                    * added two new fill tools: aggressive fill and
+                      gradient fill.
+
+v2.1 (26-Feb-2005): * added erosion operation.
+                    p code cleanups, less bloat.
+                    * reading of 8bit PNG files with transparency should work.
+                    * small optimizations.
+                    p when selecting the shown tile in the memory-window,
+                      the selection centers on the mouse cursor.
+                    p zooming can now be done is discrete steps, instead
+                      of having fixed zoom values.
+                    p editor window has a status line at the bottom.
+                    p added an undo stack, so you can do more than 1 undo.
+                    p added visible grid.
+                    p grid size and editor-window size are independent.
+                    p added new drawing tools: line, rectangle and circle.
+
+v2.0 (15-May-2004): * added new tiled view size: 1x1.
+                    * added new tiled view zoom modes: 500% and 1000%.
+                    * added revert menu option to the memory window.
+                    * changed the asterisk symbol in the menubars to pipe.
+                    * shrinking the image and having unchecked snap-to-grid
+                      doesn't possibly crash tile driller any more.
+                    * reading of 16bit PNG files should work.
+                    * PNG saving could crash (a very rare bug).
+                    * optimized window updates a bit.
+
+v1.9 (28-Jan-2004): * tile driller can now load TGA files, too.
+                    * fixed few possible crashes introduced in v1.8.
+                    * code cleanups.
+                    * small optimizations here and there.
+
+v1.8 (12-Jan-2004): * palette and tiled view window origins are now
+                      captured when the windows are closed, not only
+                      at exit.
+                    * made the preference file reader more robust.
+                    * added more information into the tiled view
+                      window titlebar.
+                    b added background color.
+                    b all image clear operations are performed using
+                      the background color.
+                    b BMP image loader flipped the image.
+                    * fixed few mouse pointer pixel quirks in the
+                      editor window.
+
+v1.7 (17-Dec-2003): * the user can now hide palette and tiled view
+                      windows completely.
+                    * added image scaling, and undo.
+                    * tile driller now saves and loads its
+                      preferences.
+                    * tile loading saves now undo data.
+                    * the "open"-dialogs inherit the paths from the
+                      "save as"-dialogs.
+                    * the color pickers round the values of the color
+                      components up to the nearest integer, not down,
+                      to obtain the correct result.
+
+v1.6 (09-Dec-2003): * added another image size: 2048x2048.
+                    * added new editor window zoom mode: 100%.
+                    * added new tile sizes: 512x512 and 1024x1024.
+                    * added more information into the memory window
+                      tittlebar.
+                    * added tile saving and loading.
+                    * added tile scaling: 50%, 25% and 12.5%.
+                    * compressed the editor window menus.
+                    * optimized memory window updating a lot.
+                    * resizing the memory window to be smaller than the
+                      tile will not crash tile driller anymore.
+                    * resizing the tile warps the editor window to
+                      the nearest tile, not to tile 0.
+                    * the memory window can now be resized, and scrollbars
+                      appear when the image is larger than the window.
+                    * tile driller can now load PCX files, too.
+                    * tiled view window can be toggled off.
+
+v1.5 (03-Dec-2003): * moved the mirror operators from the filters-menu
+                      to edit-menu.
+                    * added two new tools: blur (gaussian) and blur
+                      (normal).
+                    * added mirror & blend -operators (left->right and
+                      top->bottom, linear and stochastic).
+                    * added another image size: 1024x1024.
+                    * the "save as"-dialog inherits the path from the
+                      "open"-dialog.
+                    * the image window title shows only the filename,
+                      not the full path.
+
+v1.4 (25-Nov-2003): * added filters-menu to the editor window with
+                      blur (gaussian), blur (normal), build alpha,
+                      negate, mirror (left->right) and mirror (top->
+                      bottom) filters.
+                    * added new tile sizes: 128x128 and 256x256.
+                    * added new editor window zoom modes: 200% and 400%,
+                      and changed 500% to 600%.
+                    * added tile rotation (90 degrees left and right).
+                    * tile driller can now load BMP and JPG files, too.
+                    * took away key shortcuts to zoom modes, because
+                      GTK started to mess up the keys.
+                    * the code can now be compiled using visual c++.
+
+v1.3 (15-Nov-2003): * optimized tile flipping and rotating, and tiled
+                      view window updating.
+                    * undo didn't work properly if the user used pen
+                      and started to draw from a pixel, which was the
+                      same color as the pen.
+                    * now the pixel under the mouse pointer is
+                      highlighted in the editor window.
+
+v1.2 (01-Nov-2003): * tiled view window is not updated while the user
+                      is holding the mouse button down by default,
+                      to make the editor work faster.
+                    * tiled and image window update modes can now be
+                      selected from the view-menu.
+                    * optimized window drawing a lot.
+                    * added a toggle buttom for releasing the editor
+                      window from the tile grid.
+                    * added size menu to tiled window.
+                    * made the editor window title a little clearer.
+                    * adjusted the editor window's zoom options.
+                    * tile driller can load PNG images of any size,
+                      but will cut the data to fit into one of the
+                      supported image sizes.
+                    * loading a 64x64 image will set the view mode
+                      correctly.
+
+v1.1 (29-Oct-2003): * editor window's view selection determines the
+                      buffer, which all operations affect.
+                    * undo operation also saves undo data.
+                    * a familiar checkered background can be seen
+                      when alpha is near zero.
+                    * editor and viewer default to RGBA now.
+                    * trying to load a non-PNG image will not crash
+                      tile driller any more.
+                    * editor window title shows more information.
+                    * added new tile size: 64x64.
+                    * added new image size: 64x64.
+                    * added tiled view window.
+                    * added new editor window zoom mode: 500%.
+                    * added more key shortcuts.
+                    * optimized window drawing.
+                    * migrated to GTK 2.0 (from 1.2).
+                    * resizing the image preserves as much old data as
+                      possible.
+
+v1.0 (28-Oct-2003): * initial release.

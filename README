@@ -1,0 +1,86 @@
+
+-----------------------------------------------------------------------------
+-                             tile driller                                  -
+-           written by ville helin <vhelin#iki.fi> in 2003-2008             -
+-----------------------------------------------------------------------------
+
+
+1. TILE DRILLER?
+
+tile driller is a small drawing program, which is targetted to people who
+want to draw tile based graphics pixel by pixel. tile driller loads BMP, JPG,
+PCX, PNG and TGA files, and saves PNG files with alpha. the editing takes
+place in 32bit RGBA color space.
+
+
+2. COMPILING?
+
+make
+
+if make gives errors, edit the makefile. or something.
+
+
+3. USAGE?
+
+USAGE: ./tiledriller
+
+after this use your mouse to draw. the foreground color is assigned to
+the left mouse button, the background color is assigned to the right
+mouse button. you can also use the following keys:
+
+memory window:
+
+* cursor keys to move to the neighboring tiles
+
+editor window:
+
+* cursor keys to move to the neighboring tiles
+* a, w, s and d to shift the tile
+* x and y to flip the tile
+* q and e to rotate the tile
+
+NOTE! the view mode is also the space, which all drawing operations affect.
+so if you are in RGB mode your pen affects only red, green and blue
+components of the image.
+
+few things about drawing:
+
+a. opacity in the palette window is the value for the alpha channel.
+b. all filters except the "build alpha"-filter operate on the pixels of
+   the selected viewing mode. "build alpha"-filter goes through the
+   image and sets the pixel's alpha value to zero if its RGB components
+   match with the pen's foreground color, and if there is no match the alpha
+   is set to 255.
+c. mirror & blend -operators mirror the tile horizontally or vertically
+   and then blend the mirrored part, using a linear or a stochastic
+   alpha ramp, with the editor buffer.
+d. the erosion operation uses the current foreground pen color as the
+   background color for erosion. the pixels of all other colors are
+   considered to be part of the image that will get eroded.
+e. aggressive fill calculates the difference to the clicked pixel in
+   the selected view mode space (RGBA, RGB or A), and if it is component
+   wise less than the threshold (10), then the fill proceeds.
+f. gradient fill works like aggressive fill, but it calculates the
+   difference to the previous pixel, not to the initial pixel. The
+   threshold here is 8.
+
+
+4. REQUIREMENTS
+
+currently tile driller requires:
+
+* LINUX (hasn't been tested elsewhere)
+* GTK 2.0
+* LIBPNG, LIBJPEG and ZLIB (for reading and saving the images)
+
+
+5. MOTIVATION?
+
+i wrote tile driller, because i want to draw tile graphics pixel by pixel
+in 32bit RGBA color space. GIMP cannot do this or any other paint program
+i tried out on LINUX.
+
+
+6. LICENCE
+
+tile driller is GPL software. read the LICENSE file for more information.
