@@ -53,9 +53,9 @@ GtkItemFactoryEntry tiled_menu_items[] = {
   { "/View/Updated in Real-Time", NULL, tiled_update_mode, 0, "<ToggleItem>" },
 };
 
-void
-tiled_struct_init(void)
-{
+
+void tiled_struct_init(void) {
+  
   tilwin.window = NULL;
   tilwin.vbox1 = NULL;
   tilwin.vbox2 = NULL;
@@ -84,6 +84,7 @@ tiled_struct_init(void)
   tilwin.view_status = ON;
   tilwin.real_time = ON;
 }
+
 
 int tiled_window_init(void) {
 
@@ -195,6 +196,7 @@ static void tiled_zoom_n(GtkWidget *widget, gpointer data) {
   gtk_drawing_area_size(GTK_DRAWING_AREA(tilwin.draw_area), tilwin.surf.width*tilwin.surf.zoom, tilwin.surf.height*tilwin.surf.zoom);
 }
 
+
 static void tiled_zoom_change(GtkWidget *widget, gpointer data) {
 
   int zoom;
@@ -236,14 +238,14 @@ int tiled_window_import_data(void) {
     for (x = 0; x < tilwin.tiles_dx; x++) {
       m = ((x*editwin.surf.width)<<2) + n;
       for (i = 0, a = 0; a < editwin.surf.height; a++) {
-	o = ((a*tilwin.surf.width)<<2) + m;
-	p = o;
-	for (b = 0; b < editwin.surf.width; b++) {
-	  tilwin.surf.data[p++] = editwin.surf.data[i++];
-	  tilwin.surf.data[p++] = editwin.surf.data[i++];
-	  tilwin.surf.data[p++] = editwin.surf.data[i++];
-	  tilwin.surf.data[p++] = editwin.surf.data[i++];
-	}
+        o = ((a*tilwin.surf.width)<<2) + m;
+        p = o;
+        for (b = 0; b < editwin.surf.width; b++) {
+          tilwin.surf.data[p++] = editwin.surf.data[i++];
+          tilwin.surf.data[p++] = editwin.surf.data[i++];
+          tilwin.surf.data[p++] = editwin.surf.data[i++];
+          tilwin.surf.data[p++] = editwin.surf.data[i++];
+        }
       }
     }
   }
@@ -318,7 +320,7 @@ static gboolean tiled_draw_area_expose(GtkWidget *widget, GdkEventExpose *event,
 
   if (tilwin.surf.view != NULL) {
     gdk_draw_rgb_image(widget->window, widget->style->fg_gc[GTK_STATE_NORMAL], 0, 0,
-		       tilwin.surf.width*tilwin.surf.zoom, tilwin.surf.height*tilwin.surf.zoom, GDK_RGB_DITHER_MAX, tilwin.surf.view, tilwin.surf.width*tilwin.surf.zoom*3);
+                       tilwin.surf.width*tilwin.surf.zoom, tilwin.surf.height*tilwin.surf.zoom, GDK_RGB_DITHER_MAX, tilwin.surf.view, tilwin.surf.width*tilwin.surf.zoom*3);
   }
 
   return FALSE;

@@ -6,16 +6,16 @@
 #include "defines.h"
 
 
-#define _READ_INT { \
-  c = (unsigned char *)&i; \
-  fscanf(f, "%c%c%c%c", &c[0], &c[1], &c[2], &c[3]); \
-}
+#define _READ_INT {                                     \
+    c = (unsigned char *)&i;                            \
+    fscanf(f, "%c%c%c%c", &c[0], &c[1], &c[2], &c[3]);  \
+  }
 
-#define _READ_WORD { \
-  c = (unsigned char *)&i; \
-  fscanf(f, "%c%c", &c[0], &c[1]); \
-  c[2] = c[3] = 0; \
-}
+#define _READ_WORD {                            \
+    c = (unsigned char *)&i;                    \
+    fscanf(f, "%c%c", &c[0], &c[1]);            \
+    c[2] = c[3] = 0;                            \
+  }
 
 
 int bmp_load(char *name, int *dx, int *dy, int *bpp, unsigned char **o) {

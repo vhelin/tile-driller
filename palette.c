@@ -24,9 +24,9 @@ static void palette_bg_button_clicked(void);
 static void palette_selection_change(GtkWidget *widget, gpointer data);
 static gint palette_hide_window(GtkWidget *widget, gpointer data);
 
-void
-palette_struct_init(void)
-{
+
+void palette_struct_init(void) {
+  
   palwin.window = NULL;
   palwin.vbox1 = NULL;
   palwin.mode_hbox1 = NULL;
@@ -37,6 +37,7 @@ palette_struct_init(void)
   palwin.status = ON;
   palwin.select_mode = FG;
 }
+
 
 int palette_window_init(void) {
 
@@ -89,6 +90,7 @@ int palette_window_init(void) {
   return SUCCEEDED;
 }
 
+
 static void palette_fg_button_clicked(void) {
 
   palwin.select_mode = FG;
@@ -101,7 +103,6 @@ static void palette_bg_button_clicked(void) {
   palwin.select_mode = BG;
   palette_window_refresh();
 }
-
 
 
 static void palette_selection_change(GtkWidget *widget, gpointer data) {

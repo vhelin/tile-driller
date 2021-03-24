@@ -6,16 +6,16 @@
 #include "defines.h"
 
 
-#define _READ_INT { \
-  c = (unsigned char *)&i; \
-  fscanf(f, "%c%c%c%c", &c[0], &c[1], &c[2], &c[3]); \
-}
+#define _READ_INT {                                     \
+    c = (unsigned char *)&i;                            \
+    fscanf(f, "%c%c%c%c", &c[0], &c[1], &c[2], &c[3]);  \
+  }
 
-#define _READ_WORD { \
-  c = (unsigned char *)&i; \
-  fscanf(f, "%c%c", &c[0], &c[1]); \
-  c[2] = c[3] = 0; \
-}
+#define _READ_WORD {                            \
+    c = (unsigned char *)&i;                    \
+    fscanf(f, "%c%c", &c[0], &c[1]);            \
+    c[2] = c[3] = 0;                            \
+  }
 
 
 static int _tga_load_2(char *name, int *dx, int *dy, int *bpp, unsigned char **o, int id, int cm, FILE *f) {
@@ -173,19 +173,19 @@ static int _tga_load_10(char *name, int *dx, int *dy, int *bpp, unsigned char **
       /* raw packet */
       co++;
       for (d = 0; d < co && i < (*dx)*(*dy); d++, i++) {
-	if (*bpp == 3) {
-	  fscanf(f, "%c%c%c", &tmp[2], &tmp[1], &tmp[0]);
-	  (*o)[i*3 + 0] = tmp[0];
-	  (*o)[i*3 + 1] = tmp[1];
-	  (*o)[i*3 + 2] = tmp[2];
-	}
-	else if (*bpp == 4) {
-	  fscanf(f, "%c%c%c%c", &tmp[2], &tmp[1], &tmp[0], &tmp[3]);
-	  (*o)[i*4 + 0] = tmp[0];
-	  (*o)[i*4 + 1] = tmp[1];
-	  (*o)[i*4 + 2] = tmp[2];
-	  (*o)[i*4 + 3] = tmp[3];
-	}
+        if (*bpp == 3) {
+          fscanf(f, "%c%c%c", &tmp[2], &tmp[1], &tmp[0]);
+          (*o)[i*3 + 0] = tmp[0];
+          (*o)[i*3 + 1] = tmp[1];
+          (*o)[i*3 + 2] = tmp[2];
+        }
+        else if (*bpp == 4) {
+          fscanf(f, "%c%c%c%c", &tmp[2], &tmp[1], &tmp[0], &tmp[3]);
+          (*o)[i*4 + 0] = tmp[0];
+          (*o)[i*4 + 1] = tmp[1];
+          (*o)[i*4 + 2] = tmp[2];
+          (*o)[i*4 + 3] = tmp[3];
+        }
       }
     }
     else {
@@ -193,21 +193,21 @@ static int _tga_load_10(char *name, int *dx, int *dy, int *bpp, unsigned char **
       co = co & 127;
       co++;
       if (*bpp == 3) {
-	fscanf(f, "%c%c%c", &tmp[2], &tmp[1], &tmp[0]);
-	for (d = 0; d < co && i < (*dx)*(*dy); d++, i++) {
-	  (*o)[i*3 + 0] = tmp[0];
-	  (*o)[i*3 + 1] = tmp[1];
-	  (*o)[i*3 + 2] = tmp[2];
-	}
+        fscanf(f, "%c%c%c", &tmp[2], &tmp[1], &tmp[0]);
+        for (d = 0; d < co && i < (*dx)*(*dy); d++, i++) {
+          (*o)[i*3 + 0] = tmp[0];
+          (*o)[i*3 + 1] = tmp[1];
+          (*o)[i*3 + 2] = tmp[2];
+        }
       }
       else if (*bpp == 4) {
-	fscanf(f, "%c%c%c%c", &tmp[2], &tmp[1], &tmp[0], &tmp[3]);
-	for (d = 0; d < co && i < (*dx)*(*dy); d++, i++) {
-	  (*o)[i*4 + 0] = tmp[0];
-	  (*o)[i*4 + 1] = tmp[1];
-	  (*o)[i*4 + 2] = tmp[2];
-	  (*o)[i*4 + 3] = tmp[3];
-	}
+        fscanf(f, "%c%c%c%c", &tmp[2], &tmp[1], &tmp[0], &tmp[3]);
+        for (d = 0; d < co && i < (*dx)*(*dy); d++, i++) {
+          (*o)[i*4 + 0] = tmp[0];
+          (*o)[i*4 + 1] = tmp[1];
+          (*o)[i*4 + 2] = tmp[2];
+          (*o)[i*4 + 3] = tmp[3];
+        }
       }
     }
   }

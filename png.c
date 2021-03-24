@@ -72,14 +72,14 @@ int png_load(char *name, int *dx, int *dy, int *bpp, unsigned char **o) {
   if (colortype == PNG_COLOR_TYPE_PALETTE) {
     png_set_palette_to_rgb(png_ptr);
     colortype = PNG_COLOR_TYPE_RGB;
-		depth = 8;
+    depth = 8;
   }
 
   /* grayscale -> RGB */
   if (colortype == PNG_COLOR_TYPE_GRAY) {
     png_set_gray_to_rgb(png_ptr);
     colortype = PNG_COLOR_TYPE_RGB;
-		depth = 8;
+    depth = 8;
   }
 
   /* bit depth -> 8 */
@@ -188,7 +188,7 @@ int png_save(char *name, int dx, int dy, unsigned char *o) {
   png_set_compression_method(png_ptr, 8);
 
   png_set_IHDR(png_ptr, info_ptr, dx, dy, 8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE,
-	       PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+               PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
   png_write_info(png_ptr, info_ptr);
 

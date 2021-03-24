@@ -5,13 +5,13 @@
 #include <math.h>
 
 #ifdef WIN32
-  /*
+/*
   this needs to be before defines.h, since winerr.h defines
   SUCCEEDED and FAILED macros.
-  */
-  #include <windows.h>
-  #undef SUCCEEDED
-  #undef FAILED
+*/
+#include <windows.h>
+#undef SUCCEEDED
+#undef FAILED
 #endif
 
 #include <gtk/gtk.h>

@@ -67,9 +67,9 @@ int prefs_read(void) {
     if (strcmp("Version", tmp) == 0) {
       fscanf(f, "%d", &i);
       if (i != 1) {
-				fprintf(stderr, "PREFS_LOAD: Configuration file version %d is not supported.\n", i);
-				fclose(f);
-				return FAILED;
+        fprintf(stderr, "PREFS_LOAD: Configuration file version %d is not supported.\n", i);
+        fclose(f);
+        return FAILED;
       }
     }
     else if (strcmp("TiledViewWindow", tmp) == 0) {
@@ -134,8 +134,8 @@ int prefs_read(void) {
     else if (strcmp("MemoryWindowSize", tmp) == 0) {
       fscanf(f, "%d %d", &a, &b);
       if (a >= 0 && b >= 0) {
-				memory_window_dx = a;
-				memory_window_dy = b;
+        memory_window_dx = a;
+        memory_window_dy = b;
       }
     }
     else if (strcmp("TiledViewViewMode", tmp) == 0) {
@@ -150,29 +150,29 @@ int prefs_read(void) {
     else if (strcmp("MemoryWindowOrigin", tmp) == 0) {
       fscanf(f, "%d %d", &a, &b);
       if (a >= 0 && b >= 0) {
-				memory_window_x = a;
-				memory_window_y = b;
+        memory_window_x = a;
+        memory_window_y = b;
       }
     }
     else if (strcmp("EditorWindowOrigin", tmp) == 0) {
       fscanf(f, "%d %d", &a, &b);
       if (a >= 0 && b >= 0) {
-				editor_window_x = a;
-				editor_window_y = b;
+        editor_window_x = a;
+        editor_window_y = b;
       }
     }
     else if (strcmp("TiledViewWindowOrigin", tmp) == 0) {
       fscanf(f, "%d %d", &a, &b);
       if (a >= 0 && b >= 0) {
-				tiled_window_x = a;
-				tiled_window_y = b;
+        tiled_window_x = a;
+        tiled_window_y = b;
       }
     }
     else if (strcmp("PaletteWindowOrigin", tmp) == 0) {
       fscanf(f, "%d %d", &a, &b);
       if (a >= 0 && b >= 0) {
-				palette_window_x = a;
-				palette_window_y = b;
+        palette_window_x = a;
+        palette_window_y = b;
       }
     }
     else if (strcmp("PaletteWindowBGColor", tmp) == 0) {
@@ -197,29 +197,29 @@ int prefs_read(void) {
     }
     else if (strcmp("EditorFilePath", tmp) == 0) {
       while (fscanf(f, "%c", tmp) != EOF) {
-				if (tmp[0] == '"')
-					break;
+        if (tmp[0] == '"')
+          break;
       }
       for (i = 0; i < 255; i++) {
-				if (fscanf(f, "%c", tmp) == EOF)
-					break;
-				if (tmp[0] == '"')
-					break;
-				editwin.file_path[i] = tmp[0];
+        if (fscanf(f, "%c", tmp) == EOF)
+          break;
+        if (tmp[0] == '"')
+          break;
+        editwin.file_path[i] = tmp[0];
       }
       editwin.file_path[i] = 0;
     }
     else if (strcmp("MemoryFilePath", tmp) == 0) {
       while (fscanf(f, "%c", tmp) != EOF) {
-				if (tmp[0] == '"')
-					break;
+        if (tmp[0] == '"')
+          break;
       }
       for (i = 0; i < 255; i++) {
-				if (fscanf(f, "%c", tmp) == EOF)
-					break;
-				if (tmp[0] == '"')
-					break;
-				memwin.file_path[i] = tmp[0];
+        if (fscanf(f, "%c", tmp) == EOF)
+          break;
+        if (tmp[0] == '"')
+          break;
+        memwin.file_path[i] = tmp[0];
       }
       memwin.file_path[i] = 0;
     }

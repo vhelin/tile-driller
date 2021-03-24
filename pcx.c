@@ -6,16 +6,16 @@
 #include "defines.h"
 
 
-#define _READ_INT { \
-  c = (unsigned char *)&i; \
-  fscanf(f, "%c%c%c%c", &c[0], &c[1], &c[2], &c[3]); \
-}
+#define _READ_INT {                                     \
+    c = (unsigned char *)&i;                            \
+    fscanf(f, "%c%c%c%c", &c[0], &c[1], &c[2], &c[3]);  \
+  }
 
-#define _READ_WORD { \
-  c = (unsigned char *)&i; \
-  fscanf(f, "%c%c", &c[0], &c[1]); \
-  c[2] = c[3] = 0; \
-}
+#define _READ_WORD {                            \
+    c = (unsigned char *)&i;                    \
+    fscanf(f, "%c%c", &c[0], &c[1]);            \
+    c[2] = c[3] = 0;                            \
+  }
 
 
 int _pcx_load_1(FILE *f, int bpl, int *dx, int *dy, unsigned char **o) {
@@ -83,13 +83,13 @@ int _pcx_load_8(FILE *f, int bpl, int *dx, int *dy, unsigned char **o) {
       fscanf(f, "%c", &tmp);
 
       if ((tmp & 0xC0) == 0xC0) {
-	i = tmp & 0x3F;
-	fscanf(f, "%c", &tmp);
-	for (; i > 0; i--)
-	  t[b++] = tmp;
+        i = tmp & 0x3F;
+        fscanf(f, "%c", &tmp);
+        for (; i > 0; i--)
+          t[b++] = tmp;
       }
       else {
-	t[b++] = tmp;
+        t[b++] = tmp;
       }
     }
 
@@ -132,13 +132,13 @@ int _pcx_load_24(FILE *f, int bpl, int *dx, int *dy, unsigned char **o) {
       fscanf(f, "%c", &tmp);
 
       if ((tmp & 0xC0) == 0xC0) {
-	i = tmp & 0x3F;
-	fscanf(f, "%c", &tmp);
-	for (; i > 0; i--)
-	  t[b++] = tmp;
+        i = tmp & 0x3F;
+        fscanf(f, "%c", &tmp);
+        for (; i > 0; i--)
+          t[b++] = tmp;
       }
       else {
-	t[b++] = tmp;
+        t[b++] = tmp;
       }
     }
 

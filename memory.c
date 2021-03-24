@@ -106,9 +106,9 @@ GtkItemFactoryEntry memory_menu_items[] = {
   { "/Windows/Palette", NULL,         memory_window_n, 1, "<ToggleItem>" },
 };
 
-void
-memory_struct_init(void)
-{
+
+void memory_struct_init(void) {
+  
   memwin.window = NULL;
   memwin.vbox1 = NULL;
   memwin.menubar = NULL;
@@ -145,6 +145,7 @@ memory_struct_init(void)
   memwin.undo_stack_max_depth = 10;
 }
 
+
 int memory_window_init(void) {
 
   /* window */
@@ -162,13 +163,13 @@ int memory_window_init(void) {
   memwin.draw_area = gtk_drawing_area_new();
   gtk_drawing_area_size(GTK_DRAWING_AREA(memwin.draw_area), memwin.surf.width*memwin.surf.zoom, memwin.surf.height*memwin.surf.zoom);
   gtk_widget_add_events(memwin.draw_area,
-			GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_POINTER_MOTION_MASK);
+                        GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_POINTER_MOTION_MASK);
 
   /* scrolled window */
   memwin.scrolled_window = gtk_scrolled_window_new(NULL, NULL);
   gtk_container_set_border_width(GTK_CONTAINER(memwin.scrolled_window), 4);
   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(memwin.scrolled_window),
-				 GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+                                 GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
   /* boxes */
   memwin.vbox1 = gtk_vbox_new(FALSE, 0);
@@ -224,11 +225,11 @@ static gint memory_key_press(GtkWidget *widget, GdkEventKey *event) {
     if (memwin.surf.child->parent_xofs < memwin.surf.width - memwin.surf.child->width) {
       memwin.surf.child->parent_xofs += memwin.surf.child->width;
       if (common_compute_tile_position(&memwin.surf) == SUCCEEDED) {
-	editor_window_set_title();
-	common_copy_data_to_child(&memwin.surf);
-	editor_window_refresh();
-	memory_window_refresh();
-	tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&memwin.surf);
+        editor_window_refresh();
+        memory_window_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -237,11 +238,11 @@ static gint memory_key_press(GtkWidget *widget, GdkEventKey *event) {
     if (memwin.surf.child->parent_xofs >= memwin.surf.child->width) {
       memwin.surf.child->parent_xofs -= memwin.surf.child->width;
       if (common_compute_tile_position(&memwin.surf) == SUCCEEDED) {
-	editor_window_set_title();
-	common_copy_data_to_child(&memwin.surf);
-	editor_window_refresh();
-	memory_window_refresh();
-	tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&memwin.surf);
+        editor_window_refresh();
+        memory_window_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -250,11 +251,11 @@ static gint memory_key_press(GtkWidget *widget, GdkEventKey *event) {
     if (memwin.surf.child->parent_yofs >= memwin.surf.child->height) {
       memwin.surf.child->parent_yofs -= memwin.surf.child->height;
       if (common_compute_tile_position(&memwin.surf) == SUCCEEDED) {
-	editor_window_set_title();
-	common_copy_data_to_child(&memwin.surf);
-	editor_window_refresh();
-	memory_window_refresh();
-	tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&memwin.surf);
+        editor_window_refresh();
+        memory_window_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -263,11 +264,11 @@ static gint memory_key_press(GtkWidget *widget, GdkEventKey *event) {
     if (memwin.surf.child->parent_yofs < memwin.surf.height - memwin.surf.child->height) {
       memwin.surf.child->parent_yofs += memwin.surf.child->height;
       if (common_compute_tile_position(&memwin.surf) == SUCCEEDED) {
-	editor_window_set_title();
-	common_copy_data_to_child(&memwin.surf);
-	editor_window_refresh();
-	memory_window_refresh();
-	tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&memwin.surf);
+        editor_window_refresh();
+        memory_window_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -283,7 +284,7 @@ int memory_draw_editor_rectangle(void) {
 
   /* top */
   for (x = 0; x < memwin.surf.child->width; x++)
-      common_putpixel(memwin.surf.child->parent_xofs + x, memwin.surf.child->parent_yofs, NULL, &memwin.surf);
+    common_putpixel(memwin.surf.child->parent_xofs + x, memwin.surf.child->parent_yofs, NULL, &memwin.surf);
 
   /* bottom */
   for (x = 0; x < memwin.surf.child->width; x++)
@@ -334,20 +335,20 @@ void memory_window_set_title(void) {
 #ifdef WIN32
       if (memwin.file_name[i] == '\\')
 #else
-      if (memwin.file_name[i] == '/')
+        if (memwin.file_name[i] == '/')
 #endif
-	break;
+          break;
     }
 
     if (editwin.need_to_save == NO) {
       sprintf(tmp, "%s | %s | %dx%d | ", version_string, &memwin.file_name[i+1], memwin.surf.width, memwin.surf.height);
       if (memwin.widget_revert != NULL)
-	gtk_widget_set_sensitive(memwin.widget_revert, FALSE);
+        gtk_widget_set_sensitive(memwin.widget_revert, FALSE);
     }
     else {
       sprintf(tmp, "%s | *%s | %dx%d | ", version_string, &memwin.file_name[i+1], memwin.surf.width, memwin.surf.height);
       if (memwin.widget_revert != NULL)
-	gtk_widget_set_sensitive(memwin.widget_revert, TRUE);
+        gtk_widget_set_sensitive(memwin.widget_revert, TRUE);
     }
   }
   else {
@@ -378,9 +379,9 @@ void memory_resize_view(int zoom) {
   memwin.surf.zoom = zoom;
 }
 
-void
-memory_draw_grid()
-{
+
+void memory_draw_grid() {
+  
   if (memwin.show_grid) {
     int x, y;
 
@@ -390,6 +391,7 @@ memory_draw_grid()
       common_line_dotted_horiz(y * memwin.surf.zoom, &memwin.surf);
   }
 }
+
 
 static void memory_clear(GtkWidget *widget, gpointer data) {
 
@@ -444,11 +446,13 @@ static void memory_scale_n(GtkWidget *widget, gpointer data) {
 
 
 static void memory_copy_to_undo(void) {
+
   undo_push(&memwin.surf, &memwin.undo_data);
 }
 
 
 static void memory_undo(GtkWidget *widget, gpointer data) {
+
   undo_pop(&memwin.surf, &memwin.undo_data);
 
   common_copy_data_to_view(&memwin.surf);
@@ -492,7 +496,7 @@ int memory_window_block_refresh(void) {
 
   /* refresh the memory draw area */
   gdk_draw_rgb_image(memwin.draw_area->window, memwin.draw_area->style->fg_gc[GTK_STATE_NORMAL], memwin.surf.child->parent_xofs*memwin.surf.zoom, memwin.surf.child->parent_yofs*memwin.surf.zoom,
-		     memwin.surf.child->width*memwin.surf.zoom, memwin.surf.child->height*memwin.surf.zoom, GDK_RGB_DITHER_MAX, memwin.surf.view + memwin.surf.child->parent_yofs*memwin.surf.zoom*memwin.surf.width*3*memwin.surf.zoom + memwin.surf.child->parent_xofs*3*memwin.surf.zoom, memwin.surf.width*memwin.surf.zoom*3);
+                     memwin.surf.child->width*memwin.surf.zoom, memwin.surf.child->height*memwin.surf.zoom, GDK_RGB_DITHER_MAX, memwin.surf.view + memwin.surf.child->parent_yofs*memwin.surf.zoom*memwin.surf.width*3*memwin.surf.zoom + memwin.surf.child->parent_xofs*3*memwin.surf.zoom, memwin.surf.width*memwin.surf.zoom*3);
 
   return SUCCEEDED;
 }
@@ -509,7 +513,7 @@ int memory_window_plain_block_refresh(void) {
 
   /* refresh the memory draw area */
   gdk_draw_rgb_image(memwin.draw_area->window, memwin.draw_area->style->fg_gc[GTK_STATE_NORMAL], memwin.surf.child->parent_xofs*memwin.surf.zoom, memwin.surf.child->parent_yofs*memwin.surf.zoom,
-		     memwin.surf.child->width*memwin.surf.zoom, memwin.surf.child->height*memwin.surf.zoom, GDK_RGB_DITHER_MAX, memwin.surf.view + memwin.surf.child->parent_yofs*memwin.surf.zoom*memwin.surf.width*3*memwin.surf.zoom + memwin.surf.child->parent_xofs*3*memwin.surf.zoom, memwin.surf.width*memwin.surf.zoom*3);
+                     memwin.surf.child->width*memwin.surf.zoom, memwin.surf.child->height*memwin.surf.zoom, GDK_RGB_DITHER_MAX, memwin.surf.view + memwin.surf.child->parent_yofs*memwin.surf.zoom*memwin.surf.width*3*memwin.surf.zoom + memwin.surf.child->parent_xofs*3*memwin.surf.zoom, memwin.surf.width*memwin.surf.zoom*3);
 
   return SUCCEEDED;
 }
@@ -732,6 +736,7 @@ static void memory_zoom_n(GtkWidget *widget, gpointer data) {
   gtk_drawing_area_size(GTK_DRAWING_AREA(memwin.draw_area), memwin.surf.width*memwin.surf.zoom, memwin.surf.height*memwin.surf.zoom);
 }
 
+
 static void memory_zoom_change(GtkWidget *widget, gpointer data) {
 
   int zoom;
@@ -796,6 +801,7 @@ static void memory_size_n(GtkWidget *widget, gpointer data) {
   memory_window_set_title();
 }
 
+
 static void memory_set_gridsize_n(GtkWidget *widget, gpointer data) {
 
   int i;
@@ -831,12 +837,14 @@ static void memory_view_n(GtkWidget *widget, gpointer data) {
   memory_window_set_title();
 }
 
+
 /* editor rectangle, snap to grid */
-void memory_snaptogrid_editor_rect(int ex, int ey)
-{
+void memory_snaptogrid_editor_rect(int ex, int ey) {
+
   int x, y, a, b;
 
-  if (memwin.surf.child == NULL) return;
+  if (memwin.surf.child == NULL)
+    return;
 
   x = memwin.surf.child->parent_xofs;
   y = memwin.surf.child->parent_yofs;
@@ -854,9 +862,10 @@ void memory_snaptogrid_editor_rect(int ex, int ey)
   }
 }
 
+
 /* editor rectangle, free movement */
-void memory_freemove_editor_rect(int ex, int ey)
-{
+void memory_freemove_editor_rect(int ex, int ey) {
+  
   int x, y;
 
   x = (int)ex/memwin.surf.zoom;
@@ -881,6 +890,7 @@ void memory_freemove_editor_rect(int ex, int ey)
     memory_window_block_refresh();
   }
 }
+
 
 static gint memory_button_press(GtkWidget *widget, GdkEventButton *event) {
 
@@ -953,7 +963,6 @@ static void memory_window_n(GtkWidget *widget, gpointer data) {
 
   int i;
 
-
   i = (int)data;
   if (i == 0) {
     /* tiled view */
@@ -1003,11 +1012,10 @@ static void memory_update_mode(GtkWidget *widget, gpointer data) {
 static gboolean memory_draw_area_expose(GtkWidget *widget, GdkEventExpose *event, gpointer user_data) {
 
   if (memwin.surf.view != NULL) {
-
     memory_draw_grid();
 
     gdk_draw_rgb_image(widget->window, widget->style->fg_gc[GTK_STATE_NORMAL], 0, 0,
-		       memwin.surf.width*memwin.surf.zoom, memwin.surf.height*memwin.surf.zoom, GDK_RGB_DITHER_MAX, memwin.surf.view, memwin.surf.width*memwin.surf.zoom*3);
+                       memwin.surf.width*memwin.surf.zoom, memwin.surf.height*memwin.surf.zoom, GDK_RGB_DITHER_MAX, memwin.surf.view, memwin.surf.width*memwin.surf.zoom*3);
   }
 
   return FALSE;

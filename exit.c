@@ -36,21 +36,21 @@ int exit_dialog_init(void) {
 
 
   exit_dialog = gtk_dialog_new_with_buttons("Really quit?",
-					    GTK_WINDOW(memwin.window),
-					    0,
-					    GTK_STOCK_OK,
-					    GTK_RESPONSE_ACCEPT,
-					    GTK_STOCK_CANCEL,
-					    GTK_RESPONSE_REJECT,
-					    NULL);
+                                            GTK_WINDOW(memwin.window),
+                                            0,
+                                            GTK_STOCK_OK,
+                                            GTK_RESPONSE_ACCEPT,
+                                            GTK_STOCK_CANCEL,
+                                            GTK_RESPONSE_REJECT,
+                                            NULL);
 
   label = gtk_label_new("Quit without saving?");
   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(exit_dialog)->vbox), label);
 
   g_signal_connect_swapped(GTK_OBJECT(exit_dialog), 
-			   "response", 
-			   G_CALLBACK(exit_dialog_response),
-			   NULL);
+                           "response", 
+                           G_CALLBACK(exit_dialog_response),
+                           NULL);
 
   gtk_signal_connect(GTK_OBJECT(exit_dialog), "delete_event", GTK_SIGNAL_FUNC(common_gtk_hide_widget), NULL);
   gtk_signal_connect(GTK_OBJECT(exit_dialog), "destroy", GTK_SIGNAL_FUNC(common_gtk_hide_widget), NULL);

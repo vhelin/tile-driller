@@ -162,9 +162,9 @@ GtkItemFactoryEntry editor_menu_items[] = {
 
 };
 
-void
-editor_struct_init(void)
-{
+
+void editor_struct_init(void) {
+
   editwin.surf.width = 16;
   editwin.surf.height = 16;
   editwin.surf.zoom = 10;
@@ -212,6 +212,7 @@ editor_struct_init(void)
   editwin.mouse_old_y = -1;
 }
 
+
 int editor_window_init(void) {
 
   /* window */
@@ -229,8 +230,8 @@ int editor_window_init(void) {
   editwin.draw_area = gtk_drawing_area_new();
   gtk_drawing_area_size(GTK_DRAWING_AREA(editwin.draw_area), editwin.surf.width*editwin.surf.zoom, editwin.surf.height*editwin.surf.zoom);
   gtk_widget_add_events(editwin.draw_area,
-												GDK_KEY_RELEASE_MASK |
-												GDK_KEY_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK |
+                        GDK_KEY_RELEASE_MASK |
+                        GDK_KEY_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK |
                         GDK_BUTTON_RELEASE_MASK | GDK_KEY_RELEASE_MASK | GDK_POINTER_MOTION_MASK);
 
   /* boxes */
@@ -285,40 +286,40 @@ int editor_window_init(void) {
   return SUCCEEDED;
 }
 
-void
-editor_set_linedraw_color()
-{
+
+void editor_set_linedraw_color() {
+  
   if (editwin.mouse_button_mode == BG)
     editwin.linecolor = &editwin.pen_bg;
   else
     editwin.linecolor = &editwin.pen_fg;
 }
 
-void
-editor_gdk_refresh_rgbimage(int x, int y, int w, int h, struct td_surf *s, GtkWidget *widget)
-{
+
+void editor_gdk_refresh_rgbimage(int x, int y, int w, int h, struct td_surf *s, GtkWidget *widget) {
+
   /* refresh the editor draw area */
   if (w <= 0)
-		w = s->width;
+    w = s->width;
   if (h <= 0)
-		h = s->height;
+    h = s->height;
 
   if (y + h >= editwin.surf.height)
-		h = editwin.surf.height - y;
+    h = editwin.surf.height - y;
   if (x + w >= editwin.surf.width)
-		w = editwin.surf.width - x;
+    w = editwin.surf.width - x;
 
   gdk_draw_rgb_image(widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
-										 x*s->zoom, y*s->zoom,
-										 w*s->zoom, h*s->zoom,
-										 GDK_RGB_DITHER_MAX,
-										 s->view + y * s->zoom * s->width * 3 * s->zoom + x * 3 * s->zoom,
-										 s->width * s->zoom * 3);
+                     x*s->zoom, y*s->zoom,
+                     w*s->zoom, h*s->zoom,
+                     GDK_RGB_DITHER_MAX,
+                     s->view + y * s->zoom * s->width * 3 * s->zoom + x * 3 * s->zoom,
+                     s->width * s->zoom * 3);
 }
 
-static gint
-editor_key_release(GtkWidget *widget, GdkEventKey *event)
-{
+
+static gint editor_key_release(GtkWidget *widget, GdkEventKey *event) {
+  
   if (event->keyval == GDK_Shift_L || event->keyval == GDK_Shift_R) {
     if ((editwin.editor_modkey&MK_SHIFT)) {
       common_copy_data_to_view(&editwin.surf);
@@ -337,7 +338,8 @@ editor_key_release(GtkWidget *widget, GdkEventKey *event)
 
 static gint editor_key_press(GtkWidget *widget, GdkEventKey *event) {
 
-  if (editwin.surf.parent == NULL) return FALSE;
+  if (editwin.surf.parent == NULL)
+    return FALSE;
 
   if (event->keyval == GDK_Right) {
     /* move one tile right */
@@ -345,11 +347,11 @@ static gint editor_key_press(GtkWidget *widget, GdkEventKey *event) {
       memory_window_plain_block_refresh();
       editwin.surf.parent_xofs += editwin.surf.width;
       if (common_compute_tile_position(&editwin.surf) == SUCCEEDED) {
-				editor_window_set_title();
-				common_copy_data_to_child(&editwin.surf);
-				editor_window_refresh();
-				memory_window_block_refresh();
-				tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&editwin.surf);
+        editor_window_refresh();
+        memory_window_block_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -359,12 +361,12 @@ static gint editor_key_press(GtkWidget *widget, GdkEventKey *event) {
       memory_window_plain_block_refresh();
       editwin.surf.parent_xofs -= editwin.surf.width;
       if (common_compute_tile_position(&editwin.surf) == SUCCEEDED) {
-				editor_window_set_title();
-				common_copy_data_to_child(&editwin.surf);
+        editor_window_set_title();
+        common_copy_data_to_child(&editwin.surf);
 
-				editor_window_refresh();
-				memory_window_block_refresh();
-				tiled_window_refresh();
+        editor_window_refresh();
+        memory_window_block_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -374,11 +376,11 @@ static gint editor_key_press(GtkWidget *widget, GdkEventKey *event) {
       memory_window_plain_block_refresh();
       editwin.surf.parent_yofs -= editwin.surf.height;
       if (common_compute_tile_position(&editwin.surf) == SUCCEEDED) {
-				editor_window_set_title();
-				common_copy_data_to_child(&editwin.surf);
-				editor_window_refresh();
-				memory_window_block_refresh();
-				tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&editwin.surf);
+        editor_window_refresh();
+        memory_window_block_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -388,11 +390,11 @@ static gint editor_key_press(GtkWidget *widget, GdkEventKey *event) {
       memory_window_plain_block_refresh();
       editwin.surf.parent_yofs += editwin.surf.height;
       if (common_compute_tile_position(&editwin.surf) == SUCCEEDED) {
-				editor_window_set_title();
-				common_copy_data_to_child(&editwin.surf);
-				editor_window_refresh();
-				memory_window_block_refresh();
-				tiled_window_refresh();
+        editor_window_set_title();
+        common_copy_data_to_child(&editwin.surf);
+        editor_window_refresh();
+        memory_window_block_refresh();
+        tiled_window_refresh();
       }
     }
   }
@@ -403,50 +405,50 @@ static gint editor_key_press(GtkWidget *widget, GdkEventKey *event) {
 
   if (event->keyval == GDK_Shift_L || event->keyval == GDK_Shift_R) {
     editwin.editor_modkey |= MK_SHIFT;
-		/*
-    if (editwin.tool_mode == TOOL_MODE_CIRCLE) {
+    /*
+      if (editwin.tool_mode == TOOL_MODE_CIRCLE) {
       if ((editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) &&
-					(editwin.editor_next_x > -1 && editwin.editor_next_y > -1)) {
-				common_copy_data_to_view(&editwin.surf);
-				editor_set_linedraw_color();
+      (editwin.editor_next_x > -1 && editwin.editor_next_y > -1)) {
+      common_copy_data_to_view(&editwin.surf);
+      editor_set_linedraw_color();
 
-				common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
-				common_putcircle(editwin.editor_curr_x,editwin.editor_curr_y, abs(editwin.editor_curr_x-editwin.editor_next_x),abs(editwin.editor_curr_y-editwin.editor_next_y), editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
-				gtk_widget_queue_draw(editwin.draw_area);
+      common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
+      common_putcircle(editwin.editor_curr_x,editwin.editor_curr_y, abs(editwin.editor_curr_x-editwin.editor_next_x),abs(editwin.editor_curr_y-editwin.editor_next_y), editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
+      gtk_widget_queue_draw(editwin.draw_area);
       }
-    }
-		else if (editwin.tool_mode == TOOL_MODE_RECT) {
-			if ((editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) &&
-					(editwin.editor_next_x > -1 && editwin.editor_next_y > -1)) {
-				common_copy_data_to_view(&editwin.surf);
-				editor_set_linedraw_color();
-				
-				common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
-				common_putrect(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
-				gtk_widget_queue_draw(editwin.draw_area);
-			}
-		}
-		else if ((editwin.tool_mode == TOOL_MODE_PEN) || (editwin.tool_mode == TOOL_MODE_LINE)) {
-			if ((editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) &&
-					(editwin.editor_next_x > -1 && editwin.editor_next_y > -1)) {
-				common_copy_data_to_view(&editwin.surf);
-				editor_set_linedraw_color();
+      }
+      else if (editwin.tool_mode == TOOL_MODE_RECT) {
+      if ((editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) &&
+      (editwin.editor_next_x > -1 && editwin.editor_next_y > -1)) {
+      common_copy_data_to_view(&editwin.surf);
+      editor_set_linedraw_color();
+                                
+      common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
+      common_putrect(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
+      gtk_widget_queue_draw(editwin.draw_area);
+      }
+      }
+      else if ((editwin.tool_mode == TOOL_MODE_PEN) || (editwin.tool_mode == TOOL_MODE_LINE)) {
+      if ((editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) &&
+      (editwin.editor_next_x > -1 && editwin.editor_next_y > -1)) {
+      common_copy_data_to_view(&editwin.surf);
+      editor_set_linedraw_color();
 
-				common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
-				if (editwin.editor_modkey&MK_CONTROL) {
-					if (abs(editwin.editor_next_x - editwin.editor_curr_x) > abs(editwin.editor_next_y - editwin.editor_curr_y)) {
-						common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
-					}
-					else {
-						common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_curr_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf);
-					}
-				}
-				else
-					common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf);
-				gtk_widget_queue_draw(editwin.draw_area);
-			}
-		}
-		*/
+      common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
+      if (editwin.editor_modkey&MK_CONTROL) {
+      if (abs(editwin.editor_next_x - editwin.editor_curr_x) > abs(editwin.editor_next_y - editwin.editor_curr_y)) {
+      common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
+      }
+      else {
+      common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_curr_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf);
+      }
+      }
+      else
+      common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf);
+      gtk_widget_queue_draw(editwin.draw_area);
+      }
+      }
+    */
   }
 
   return FALSE;
@@ -468,8 +470,10 @@ int editor_window_refresh(void) {
 
 
 static void editor_copy_to_undo(void) {
+
   undo_push(&editwin.surf, &editwin.undo_data);
 }
+
 
 static void editor_undo(GtkWidget *widget, gpointer data) {
 
@@ -485,6 +489,7 @@ static void editor_undo(GtkWidget *widget, gpointer data) {
   tiled_window_refresh();
   gtk_drawing_area_size(GTK_DRAWING_AREA(editwin.draw_area), editwin.surf.width*editwin.surf.zoom, editwin.surf.height*editwin.surf.zoom);
 }
+
 
 static void editor_clear(GtkWidget *widget, gpointer data) {
 
@@ -505,11 +510,12 @@ static void editor_clear(GtkWidget *widget, gpointer data) {
   tiled_window_refresh();
 }
 
+
 static void editor_filters_blur_gaussian(GtkWidget *widget, gpointer data) {
 
   float filter[3*3] = { 1.0/36.0, 1.0/9.0, 1.0/36.0,
-												1.0/ 9.0, 4.0/9.0, 1.0/ 9.0,
-												1.0/36.0, 1.0/9.0, 1.0/36.0 };
+    1.0/ 9.0, 4.0/9.0, 1.0/ 9.0,
+    1.0/36.0, 1.0/9.0, 1.0/36.0 };
 
   /* backup the old data */
   editor_copy_to_undo();
@@ -531,8 +537,8 @@ static void editor_filters_blur_gaussian(GtkWidget *widget, gpointer data) {
 static void editor_filters_blur_normal(GtkWidget *widget, gpointer data) {
 
   float filter[3*3] = { 1.0/9.0, 1.0/9.0, 1.0/9.0,
-												1.0/9.0, 1.0/9.0, 1.0/9.0,
-												1.0/9.0, 1.0/9.0, 1.0/9.0 };
+    1.0/9.0, 1.0/9.0, 1.0/9.0,
+    1.0/9.0, 1.0/9.0, 1.0/9.0 };
 
   /* backup the old data */
   editor_copy_to_undo();
@@ -954,6 +960,7 @@ static void editor_scale_n(GtkWidget *widget, gpointer data) {
   tiled_window_refresh();
 }
 
+
 static const char *editor_statusline(void)
 {
   static char tmp[512];
@@ -976,11 +983,11 @@ static const char *editor_statusline(void)
     strcat(tmp, " | Blur (Gaussian)");
   else if (editwin.tool_mode == TOOL_MODE_BLUR_NORMAL)
     strcat(tmp, " | Blur (Normal)");
-	/*
-  else if ((editwin.tool_mode == TOOL_MODE_LINE) ||
-					 ((editwin.tool_mode == TOOL_MODE_PEN) && (editwin.editor_modkey&MK_SHIFT)))
+  /*
+    else if ((editwin.tool_mode == TOOL_MODE_LINE) ||
+    ((editwin.tool_mode == TOOL_MODE_PEN) && (editwin.editor_modkey&MK_SHIFT)))
     strcat(tmp, " | Line");
-	*/
+  */
   else if (editwin.tool_mode == TOOL_MODE_PEN_1X1)
     strcat(tmp, " | Pen 1x1");
   else if (editwin.tool_mode == TOOL_MODE_PEN_3X3)
@@ -997,12 +1004,12 @@ static const char *editor_statusline(void)
     strcat(tmp, " | Aggressive fill");
   else if (editwin.tool_mode == TOOL_MODE_GRADIENT_FILL)
     strcat(tmp, " | Gradient fill");
-	/*
-  else if (editwin.tool_mode == TOOL_MODE_RECT)
+  /*
+    else if (editwin.tool_mode == TOOL_MODE_RECT)
     strcat(tmp, " | Rect");
-  else if (editwin.tool_mode == TOOL_MODE_CIRCLE)
+    else if (editwin.tool_mode == TOOL_MODE_CIRCLE)
     strcat(tmp, " | Circle");
-	*/
+  */
 
   sprintf(buf, " | Zoom: %i%%", editwin.surf.zoom*100);
   strcat(tmp, buf);
@@ -1012,6 +1019,7 @@ static const char *editor_statusline(void)
 
   return tmp;
 }
+
 
 int editor_window_set_title(void) {
 
@@ -1066,6 +1074,7 @@ static void editor_zoom_n(GtkWidget *widget, gpointer data) {
   gtk_drawing_area_size(GTK_DRAWING_AREA(editwin.draw_area), editwin.surf.width*editwin.surf.zoom, editwin.surf.height*editwin.surf.zoom);
 }
 
+
 static void editor_zoom_change(GtkWidget *widget, gpointer data) {
 
   int zoom;
@@ -1081,6 +1090,7 @@ static void editor_zoom_change(GtkWidget *widget, gpointer data) {
   gtk_drawing_area_size(GTK_DRAWING_AREA(editwin.draw_area), editwin.surf.width*editwin.surf.zoom, editwin.surf.height*editwin.surf.zoom);
 }
 
+
 static void editor_change_showgrid(GtkWidget *widget, gpointer data) {
 
   if (editwin.show_grid) editwin.show_grid = 0;
@@ -1093,7 +1103,6 @@ static void editor_change_showgrid(GtkWidget *widget, gpointer data) {
 static void editor_size_n(GtkWidget *widget, gpointer data) {
 
   int i;
-
 
   i = (int)data;
   if (editwin.surf.width == i && editwin.surf.height == i)
@@ -1145,7 +1154,6 @@ static void editor_view_n(GtkWidget *widget, gpointer data) {
 
   int i;
 
-
   i = (int)data;
   if (editwin.surf.viewmode == i)
     return;
@@ -1184,7 +1192,6 @@ static void editor_file_save_ok(GtkWidget *widget, gpointer data) {
   char tmp[512];
   gchar *n;
 
-
   n = (gchar *)gtk_file_selection_get_filename(GTK_FILE_SELECTION(editwin.file_selection_save));
   gtk_file_selection_set_filename(GTK_FILE_SELECTION(editwin.file_selection_open), n);
 
@@ -1208,7 +1215,6 @@ static void editor_file_open_ok(GtkWidget *widget, gpointer data) {
   unsigned char *d;
   int dx, dy, bpp, i, l;
   gchar *n, tmp[512];
-
 
   /* backup the old data */
   editor_copy_to_undo();
@@ -1377,7 +1383,7 @@ static int editor_need_to_draw(int x, int y) {
   struct td_color c, d;
 
   if (y < 0 || y >= editwin.surf.height || x < 0 || x >= editwin.surf.width)
-		return NO;
+    return NO;
 
   if (editwin.mouse_button_mode == BG)
     d = editwin.pen_bg;
@@ -1393,6 +1399,7 @@ static int editor_need_to_draw(int x, int y) {
 
   return YES;
 }
+
 
 /* old mouse x and y */
 /*static int mouse_old_x = -1, mouse_old_y = -1;*/
@@ -1437,24 +1444,24 @@ static gint editor_button_press(GtkWidget *widget, GdkEventButton *event) {
 
     memory_title_reset(YES);
 
-		if (editwin.tool_mode == TOOL_MODE_AGGRESSIVE_FILL) {
-			if (editwin.mouse_button_mode == BG)
-				common_draw_aggressive_fill(x, y, &editwin.pen_bg, &editwin.surf);
-			else
-				common_draw_aggressive_fill(x, y, &editwin.pen_fg, &editwin.surf);
-		}
-		else if (editwin.tool_mode == TOOL_MODE_GRADIENT_FILL) {
-			if (editwin.mouse_button_mode == BG)
-				common_draw_gradient_fill(x, y, &editwin.pen_bg, &editwin.surf);
-			else
-				common_draw_gradient_fill(x, y, &editwin.pen_fg, &editwin.surf);
-		}
-		else {
-			if (editwin.mouse_button_mode == BG)
-				common_draw_fill(x, y, &editwin.pen_bg, &editwin.surf);
-			else
-				common_draw_fill(x, y, &editwin.pen_fg, &editwin.surf);
-		}
+    if (editwin.tool_mode == TOOL_MODE_AGGRESSIVE_FILL) {
+      if (editwin.mouse_button_mode == BG)
+        common_draw_aggressive_fill(x, y, &editwin.pen_bg, &editwin.surf);
+      else
+        common_draw_aggressive_fill(x, y, &editwin.pen_fg, &editwin.surf);
+    }
+    else if (editwin.tool_mode == TOOL_MODE_GRADIENT_FILL) {
+      if (editwin.mouse_button_mode == BG)
+        common_draw_gradient_fill(x, y, &editwin.pen_bg, &editwin.surf);
+      else
+        common_draw_gradient_fill(x, y, &editwin.pen_fg, &editwin.surf);
+    }
+    else {
+      if (editwin.mouse_button_mode == BG)
+        common_draw_fill(x, y, &editwin.pen_bg, &editwin.surf);
+      else
+        common_draw_fill(x, y, &editwin.pen_fg, &editwin.surf);
+    }
 
     /* copy to memory */
     common_copy_data_to_parent(&editwin.surf);
@@ -1491,54 +1498,54 @@ static gint editor_button_press(GtkWidget *widget, GdkEventButton *event) {
 
     gtk_widget_queue_draw(editwin.draw_area);
   }
-	/*
-  else if (editwin.tool_mode == TOOL_MODE_CIRCLE) {
+  /*
+    else if (editwin.tool_mode == TOOL_MODE_CIRCLE) {
     if ((editwin.editor_prev_x > -1 && editwin.editor_prev_y > -1) &&
-				(editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) && (editwin.editor_modkey&MK_SHIFT)) {
-      editor_copy_to_undo();
-      editor_set_linedraw_color();
-      common_putpixel_setmode(PUTPIX_NORMAL);
-      common_putcircle(editwin.editor_prev_x,editwin.editor_prev_y, abs(editwin.editor_prev_x-editwin.editor_curr_x),abs(editwin.editor_prev_y-editwin.editor_curr_y), editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
-      common_copy_data_to_view(&editwin.surf);
-      editor_draw_grid();
-      editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
-      return FALSE;
+    (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) && (editwin.editor_modkey&MK_SHIFT)) {
+    editor_copy_to_undo();
+    editor_set_linedraw_color();
+    common_putpixel_setmode(PUTPIX_NORMAL);
+    common_putcircle(editwin.editor_prev_x,editwin.editor_prev_y, abs(editwin.editor_prev_x-editwin.editor_curr_x),abs(editwin.editor_prev_y-editwin.editor_curr_y), editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
+    common_copy_data_to_view(&editwin.surf);
+    editor_draw_grid();
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    return FALSE;
     }
-  }
-  else if (editwin.tool_mode == TOOL_MODE_RECT) {
+    }
+    else if (editwin.tool_mode == TOOL_MODE_RECT) {
     if ((editwin.editor_prev_x > -1 && editwin.editor_prev_y > -1) &&
-				(editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) && (editwin.editor_modkey&MK_SHIFT)) {
-      editor_copy_to_undo();
-      editor_set_linedraw_color();
-      common_putpixel_setmode(PUTPIX_NORMAL);
-      common_putrect(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_curr_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
-      common_copy_data_to_view(&editwin.surf);
-      editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
-      return FALSE;
+    (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1) && (editwin.editor_modkey&MK_SHIFT)) {
+    editor_copy_to_undo();
+    editor_set_linedraw_color();
+    common_putpixel_setmode(PUTPIX_NORMAL);
+    common_putrect(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_curr_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
+    common_copy_data_to_view(&editwin.surf);
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    return FALSE;
     }
-  }
-  else if ((editwin.tool_mode == TOOL_MODE_LINE) ||
-					 ((editwin.tool_mode == TOOL_MODE_PEN) && (editwin.editor_modkey&MK_SHIFT))
-					 ) {
+    }
+    else if ((editwin.tool_mode == TOOL_MODE_LINE) ||
+    ((editwin.tool_mode == TOOL_MODE_PEN) && (editwin.editor_modkey&MK_SHIFT))
+    ) {
     if ((editwin.editor_prev_x > -1 && editwin.editor_prev_y > -1) &&
-				(editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
-      editor_copy_to_undo();
-      editor_set_linedraw_color();
-      common_putpixel_setmode(PUTPIX_NORMAL);
-      if ((editwin.editor_modkey&MK_CONTROL)) {
-				if (abs(editwin.editor_prev_x - editwin.editor_curr_x) > abs(editwin.editor_prev_y - editwin.editor_curr_y)) {
-					common_putline(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_curr_x,editwin.editor_prev_y, editwin.linecolor, &editwin.surf);
-				} else {
-					common_putline(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_prev_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
-				}
-      } else
-				common_putline(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_curr_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
-      common_copy_data_to_view(&editwin.surf);
-      editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
-      return FALSE;
+    (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
+    editor_copy_to_undo();
+    editor_set_linedraw_color();
+    common_putpixel_setmode(PUTPIX_NORMAL);
+    if ((editwin.editor_modkey&MK_CONTROL)) {
+    if (abs(editwin.editor_prev_x - editwin.editor_curr_x) > abs(editwin.editor_prev_y - editwin.editor_curr_y)) {
+    common_putline(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_curr_x,editwin.editor_prev_y, editwin.linecolor, &editwin.surf);
+    } else {
+    common_putline(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_prev_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
     }
-  }
-	*/
+    } else
+    common_putline(editwin.editor_prev_x,editwin.editor_prev_y, editwin.editor_curr_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
+    common_copy_data_to_view(&editwin.surf);
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    return FALSE;
+    }
+    }
+  */
   else if (editwin.tool_mode == TOOL_MODE_PEN_1X1) {
     /* backup the old data */
     common_putpixel_setmode(PUTPIX_NORMAL);
@@ -1573,43 +1580,43 @@ static gint editor_button_press(GtkWidget *widget, GdkEventButton *event) {
     gtk_widget_queue_draw(editwin.draw_area);
   }
   else if (editwin.tool_mode == TOOL_MODE_PEN_3X3) {
-		editor_copy_to_undo();
-		editor_set_linedraw_color();
-		common_putpixel_setmode(PUTPIX_NORMAL);
-		for (i = -1; i < 2; i++) {
-			for (j = -1; j < 2; j++) {
-				if (editor_need_to_draw(x + j, y + i) == YES)
-					editor_draw_pen(x + j, y + i);
-			}
-		}
-		common_copy_data_to_view(&editwin.surf);
-		editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    editor_copy_to_undo();
+    editor_set_linedraw_color();
+    common_putpixel_setmode(PUTPIX_NORMAL);
+    for (i = -1; i < 2; i++) {
+      for (j = -1; j < 2; j++) {
+        if (editor_need_to_draw(x + j, y + i) == YES)
+          editor_draw_pen(x + j, y + i);
+      }
+    }
+    common_copy_data_to_view(&editwin.surf);
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
   }
   else if (editwin.tool_mode == TOOL_MODE_PEN_5X5) {
-		editor_copy_to_undo();
-		editor_set_linedraw_color();
-		common_putpixel_setmode(PUTPIX_NORMAL);
-		for (i = -2; i < 3; i++) {
-			for (j = -2; j < 3; j++) {
-				if (editor_need_to_draw(x + j, y + i) == YES)
-					editor_draw_pen(x + j, y + i);
-			}
-		}
-		common_copy_data_to_view(&editwin.surf);
-		editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    editor_copy_to_undo();
+    editor_set_linedraw_color();
+    common_putpixel_setmode(PUTPIX_NORMAL);
+    for (i = -2; i < 3; i++) {
+      for (j = -2; j < 3; j++) {
+        if (editor_need_to_draw(x + j, y + i) == YES)
+          editor_draw_pen(x + j, y + i);
+      }
+    }
+    common_copy_data_to_view(&editwin.surf);
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
   }
   else if (editwin.tool_mode == TOOL_MODE_PEN_7X7) {
-		editor_copy_to_undo();
-		editor_set_linedraw_color();
-		common_putpixel_setmode(PUTPIX_NORMAL);
-		for (i = -3; i < 4; i++) {
-			for (j = -3; j < 4; j++) {
-				if (editor_need_to_draw(x + j, y + i) == YES)
-					editor_draw_pen(x + j, y + i);
-			}
-		}
-		common_copy_data_to_view(&editwin.surf);
-		editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    editor_copy_to_undo();
+    editor_set_linedraw_color();
+    common_putpixel_setmode(PUTPIX_NORMAL);
+    for (i = -3; i < 4; i++) {
+      for (j = -3; j < 4; j++) {
+        if (editor_need_to_draw(x + j, y + i) == YES)
+          editor_draw_pen(x + j, y + i);
+      }
+    }
+    common_copy_data_to_view(&editwin.surf);
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
   }
   else if (editwin.tool_mode == TOOL_MODE_PICK) {
     editor_draw_pick(x, y);
@@ -1665,59 +1672,59 @@ static gint editor_motion_notify(GtkWidget *widget, GdkEventButton *event) {
 
   if (editwin.mouse_button == OFF) {
     /* no button pressed -> highlight the pixel under the pointer */
-		/*
-    if ((editwin.tool_mode == TOOL_MODE_CIRCLE) && (editwin.editor_modkey&MK_SHIFT) &&
-				(editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
+    /*
+      if ((editwin.tool_mode == TOOL_MODE_CIRCLE) && (editwin.editor_modkey&MK_SHIFT) &&
+      (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
       common_copy_data_to_view(&editwin.surf);
       editor_set_linedraw_color();
       common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
       common_putcircle(editwin.editor_curr_x,editwin.editor_curr_y, abs(editwin.editor_curr_x-x),abs(editwin.editor_curr_y-y), editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
       editor_draw_grid();
       editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+      }
+      else if ((editwin.tool_mode == TOOL_MODE_RECT) && (editwin.editor_modkey&MK_SHIFT) &&
+      (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
+      common_copy_data_to_view(&editwin.surf);
+      editor_set_linedraw_color();
+      common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
+      common_putrect(editwin.editor_curr_x,editwin.editor_curr_y, x,y, editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
+      editor_draw_grid();
+      editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+      }
+      else if ((((editwin.tool_mode == TOOL_MODE_PEN) && (editwin.editor_modkey&MK_SHIFT)) ||
+      (editwin.tool_mode == TOOL_MODE_LINE)) &&
+      (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
+      common_copy_data_to_view(&editwin.surf);
+      editor_set_linedraw_color();
+      common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
+      if ((editwin.editor_modkey&MK_CONTROL)) {
+      if (abs(editwin.editor_next_x - editwin.editor_curr_x) > abs(editwin.editor_next_y - editwin.editor_curr_y)) {
+      common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
+      }
+      else {
+      common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_curr_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf);
+      }
+      }
+      else
+      common_putline(editwin.editor_curr_x,editwin.editor_curr_y, x,y, editwin.linecolor, &editwin.surf);
+      editor_draw_grid();
+      editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+      }
+    */
+    if (0)
+      ;
+    else {
+      /* update the previous pixel */
+      if (editwin.mouse_old_x >= 0 && editwin.mouse_old_y >= 0) {
+        common_copy_pixel_to_view(editwin.mouse_old_x, editwin.mouse_old_y, &editwin.surf);
+        editor_draw_grid();
+                                
+        editor_gdk_refresh_rgbimage(editwin.mouse_old_x,editwin.mouse_old_y, 1,1, &editwin.surf, widget);
+      }
+                        
+      editor_draw_cursor(x, y, widget);
+                        
     }
-		else if ((editwin.tool_mode == TOOL_MODE_RECT) && (editwin.editor_modkey&MK_SHIFT) &&
-						 (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
-			common_copy_data_to_view(&editwin.surf);
-			editor_set_linedraw_color();
-			common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
-			common_putrect(editwin.editor_curr_x,editwin.editor_curr_y, x,y, editwin.linecolor, &editwin.surf, (editwin.editor_modkey&MK_CONTROL));
-			editor_draw_grid();
-			editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
-		}
-		else if ((((editwin.tool_mode == TOOL_MODE_PEN) && (editwin.editor_modkey&MK_SHIFT)) ||
-							(editwin.tool_mode == TOOL_MODE_LINE)) &&
-						 (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
-			common_copy_data_to_view(&editwin.surf);
-			editor_set_linedraw_color();
-			common_putpixel_setmode(PUTPIX_NORMAL|PUTPIX_VIEW|PUTPIX_ZOOM);
-			if ((editwin.editor_modkey&MK_CONTROL)) {
-				if (abs(editwin.editor_next_x - editwin.editor_curr_x) > abs(editwin.editor_next_y - editwin.editor_curr_y)) {
-					common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_next_x,editwin.editor_curr_y, editwin.linecolor, &editwin.surf);
-				}
-				else {
-					common_putline(editwin.editor_curr_x,editwin.editor_curr_y, editwin.editor_curr_x,editwin.editor_next_y, editwin.linecolor, &editwin.surf);
-				}
-			}
-			else
-				common_putline(editwin.editor_curr_x,editwin.editor_curr_y, x,y, editwin.linecolor, &editwin.surf);
-			editor_draw_grid();
-			editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
-		}
-		*/
-		if (0)
-			;
-		else {
-			/* update the previous pixel */
-			if (editwin.mouse_old_x >= 0 && editwin.mouse_old_y >= 0) {
-				common_copy_pixel_to_view(editwin.mouse_old_x, editwin.mouse_old_y, &editwin.surf);
-				editor_draw_grid();
-				
-				editor_gdk_refresh_rgbimage(editwin.mouse_old_x,editwin.mouse_old_y, 1,1, &editwin.surf, widget);
-			}
-			
-			editor_draw_cursor(x, y, widget);
-			
-		}
     editwin.mouse_old_x = x;
     editwin.mouse_old_y = y;
 
@@ -1737,89 +1744,89 @@ static gint editor_motion_notify(GtkWidget *widget, GdkEventButton *event) {
 
       /* update the other windows, too, if required */
       if (tilwin.real_time == YES)
-				tiled_window_refresh();
+        tiled_window_refresh();
       if (memwin.real_time == YES) {
-				/* copy to memory */
-				common_copy_data_to_parent(&editwin.surf);
+        /* copy to memory */
+        common_copy_data_to_parent(&editwin.surf);
 
-				memory_window_block_refresh();
+        memory_window_block_refresh();
       }
     }
   }
   else if (editwin.tool_mode == TOOL_MODE_PEN_3X3) {
-		for (i = -1; i < 2; i++) {
-			for (j = -1; j < 2; j++) {
-				if (editor_need_to_draw(x + j, y + i) == YES) {
-					editor_draw_pen(x + j, y + i);
-					/* refresh the editor draw area */
-					common_copy_pixel_to_view(x + j, y + i, &editwin.surf);
-				}
-			}
-		}
+    for (i = -1; i < 2; i++) {
+      for (j = -1; j < 2; j++) {
+        if (editor_need_to_draw(x + j, y + i) == YES) {
+          editor_draw_pen(x + j, y + i);
+          /* refresh the editor draw area */
+          common_copy_pixel_to_view(x + j, y + i, &editwin.surf);
+        }
+      }
+    }
 
-		editor_draw_grid();
+    editor_draw_grid();
 
-		editor_gdk_refresh_rgbimage(x - 1, y - 1, 3, 3, &editwin.surf, widget);
+    editor_gdk_refresh_rgbimage(x - 1, y - 1, 3, 3, &editwin.surf, widget);
 
-		/* update the other windows, too, if required */
-		if (tilwin.real_time == YES)
-			tiled_window_refresh();
-		if (memwin.real_time == YES) {
-			/* copy to memory */
-			common_copy_data_to_parent(&editwin.surf);
+    /* update the other windows, too, if required */
+    if (tilwin.real_time == YES)
+      tiled_window_refresh();
+    if (memwin.real_time == YES) {
+      /* copy to memory */
+      common_copy_data_to_parent(&editwin.surf);
 
-			memory_window_block_refresh();
-		}
+      memory_window_block_refresh();
+    }
   }
   else if (editwin.tool_mode == TOOL_MODE_PEN_5X5) {
-		for (i = -2; i < 3; i++) {
-			for (j = -2; j < 3; j++) {
-				if (editor_need_to_draw(x + j, y + i) == YES) {
-					editor_draw_pen(x + j, y + i);
-					/* refresh the editor draw area */
-					common_copy_pixel_to_view(x + j, y + i, &editwin.surf);
-				}
-			}
-		}
+    for (i = -2; i < 3; i++) {
+      for (j = -2; j < 3; j++) {
+        if (editor_need_to_draw(x + j, y + i) == YES) {
+          editor_draw_pen(x + j, y + i);
+          /* refresh the editor draw area */
+          common_copy_pixel_to_view(x + j, y + i, &editwin.surf);
+        }
+      }
+    }
 
-		editor_draw_grid();
+    editor_draw_grid();
 
-		editor_gdk_refresh_rgbimage(x - 2, y - 2, 5, 5, &editwin.surf, widget);
+    editor_gdk_refresh_rgbimage(x - 2, y - 2, 5, 5, &editwin.surf, widget);
 
-		/* update the other windows, too, if required */
-		if (tilwin.real_time == YES)
-			tiled_window_refresh();
-		if (memwin.real_time == YES) {
-			/* copy to memory */
-			common_copy_data_to_parent(&editwin.surf);
+    /* update the other windows, too, if required */
+    if (tilwin.real_time == YES)
+      tiled_window_refresh();
+    if (memwin.real_time == YES) {
+      /* copy to memory */
+      common_copy_data_to_parent(&editwin.surf);
 
-			memory_window_block_refresh();
-		}
+      memory_window_block_refresh();
+    }
   }
   else if (editwin.tool_mode == TOOL_MODE_PEN_7X7) {
-		for (i = -3; i < 4; i++) {
-			for (j = -3; j < 4; j++) {
-				if (editor_need_to_draw(x + j, y + i) == YES) {
-					editor_draw_pen(x + j, y + i);
-					/* refresh the editor draw area */
-					common_copy_pixel_to_view(x + j, y + i, &editwin.surf);
-				}
-			}
-		}
+    for (i = -3; i < 4; i++) {
+      for (j = -3; j < 4; j++) {
+        if (editor_need_to_draw(x + j, y + i) == YES) {
+          editor_draw_pen(x + j, y + i);
+          /* refresh the editor draw area */
+          common_copy_pixel_to_view(x + j, y + i, &editwin.surf);
+        }
+      }
+    }
 
-		editor_draw_grid();
+    editor_draw_grid();
 
-		editor_gdk_refresh_rgbimage(x - 3, y - 3, 7, 7, &editwin.surf, widget);
+    editor_gdk_refresh_rgbimage(x - 3, y - 3, 7, 7, &editwin.surf, widget);
 
-		/* update the other windows, too, if required */
-		if (tilwin.real_time == YES)
-			tiled_window_refresh();
-		if (memwin.real_time == YES) {
-			/* copy to memory */
-			common_copy_data_to_parent(&editwin.surf);
+    /* update the other windows, too, if required */
+    if (tilwin.real_time == YES)
+      tiled_window_refresh();
+    if (memwin.real_time == YES) {
+      /* copy to memory */
+      common_copy_data_to_parent(&editwin.surf);
 
-			memory_window_block_refresh();
-		}
+      memory_window_block_refresh();
+    }
   }
   else if (editwin.tool_mode == TOOL_MODE_BLUR_GAUSSIAN || editwin.tool_mode == TOOL_MODE_BLUR_NORMAL) {
     if (editwin.tool_mode == TOOL_MODE_BLUR_GAUSSIAN)
@@ -1893,18 +1900,18 @@ static gint editor_leave_notify(GtkWidget *widget, GdkEventButton *event) {
   editwin.mouse_old_x = -1;
   editwin.mouse_old_y = -1;
 
-	/*
-  if (((editwin.tool_mode == TOOL_MODE_CIRCLE) ||
-       (editwin.tool_mode == TOOL_MODE_RECT) ||
-       (editwin.tool_mode == TOOL_MODE_LINE) ||
-       (editwin.editor_modkey&MK_SHIFT)) &&
-      (editwin.editor_next_x > -1 && editwin.editor_next_y > -1) &&
-      (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
-		common_copy_data_to_view(&editwin.surf);
-		editor_draw_grid();
-		editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
-  }
-	*/
+  /*
+    if (((editwin.tool_mode == TOOL_MODE_CIRCLE) ||
+    (editwin.tool_mode == TOOL_MODE_RECT) ||
+    (editwin.tool_mode == TOOL_MODE_LINE) ||
+    (editwin.editor_modkey&MK_SHIFT)) &&
+    (editwin.editor_next_x > -1 && editwin.editor_next_y > -1) &&
+    (editwin.editor_curr_x > -1 && editwin.editor_curr_y > -1)) {
+    common_copy_data_to_view(&editwin.surf);
+    editor_draw_grid();
+    editor_gdk_refresh_rgbimage(0,0, 0,0, &editwin.surf, widget);
+    }
+  */
 
   editwin.editor_next_x = -1;
   editwin.editor_next_y = -1;
@@ -1918,12 +1925,12 @@ static void editor_tools_n(GtkWidget *widget, gpointer data) {
   editwin.tool_mode = (int)data;
 
   editor_window_set_title();
-	editor_window_refresh();
+  editor_window_refresh();
 }
 
-void
-editor_draw_grid()
-{
+
+void editor_draw_grid() {
+  
   if (editwin.show_grid) {
     int x, y;
     int startx = ((editwin.surf.parent_xofs+editwin.surf.width) % memwin.grid_x);
@@ -1934,15 +1941,16 @@ editor_draw_grid()
 
     if (startx < editwin.surf.width)
       for (x = startx; x < editwin.surf.width; x += memwin.grid_x) {
-				common_line_dotted_vert((editwin.surf.width-x) * editwin.surf.zoom, &editwin.surf);
+        common_line_dotted_vert((editwin.surf.width-x) * editwin.surf.zoom, &editwin.surf);
       }
 
     if (starty < editwin.surf.height)
       for (y = starty; y < editwin.surf.height; y += memwin.grid_y) {
-				common_line_dotted_horiz((editwin.surf.height-y) * editwin.surf.zoom, &editwin.surf);
+        common_line_dotted_horiz((editwin.surf.height-y) * editwin.surf.zoom, &editwin.surf);
       }
   }
 }
+
 
 static gboolean editor_draw_area_expose(GtkWidget *widget, GdkEventExpose *event, gpointer user_data) {
 
