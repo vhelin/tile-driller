@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Tile Driller
+GenericName=Tile paint program
+Comment=A simple tile paint program
+Exec=tiledriller
+Icon=/usr/share/mayo/appicon.png
+Terminal=false
+Categories=Graphics;2DGraphics;RasterGraphics;GTK;
+MimeType=image/png;image/bmp;image/jpeg;image/vnd.zbrush.pcx;image/x-pcx;image/x-tga;
