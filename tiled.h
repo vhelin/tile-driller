@@ -21,7 +21,7 @@ struct tiled_window {
   int real_time;
 };
 
-struct tiled_window tilwin;
+extern struct tiled_window tilwin;
 
 /* functions */
 void tiled_struct_init(void);

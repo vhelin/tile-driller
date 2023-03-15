@@ -24,6 +24,8 @@
 #include "string.h"
 
 
+struct edit_window editwin;
+
 /* internal functions */
 static void editor_open(GtkWidget *widget, gpointer data);
 static void editor_save(GtkWidget *widget, gpointer data);

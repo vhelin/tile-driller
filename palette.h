@@ -16,7 +16,7 @@ struct pal_window {
   int select_mode;
 };
 
-struct pal_window palwin;
+extern struct pal_window palwin;
 
 /* functions */
 void palette_struct_init(void);

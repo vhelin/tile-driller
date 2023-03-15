@@ -25,6 +25,8 @@
 #include "string.h"
 
 
+struct mem_window memwin;
+
 /* internal functions */
 static void memory_clear(GtkWidget *widget, gpointer data);
 static void memory_open(GtkWidget *widget, gpointer data);
