@@ -1,4 +1,3 @@
-
 CC=gcc
 LD=gcc
 
@@ -9,6 +8,10 @@ CFILES = main.c memory.c png.c editor.c common.c palette.c tiled.c jpg.c bmp.c s
 HFILES = main.h memory.h png.h editor.h common.h palette.h tiled.h jpg.h bmp.h string.h pcx.h prefs.h exit.h tga.h
 OFILES = main.o memory.o png.o editor.o common.o palette.o tiled.o jpg.o bmp.o string.o pcx.o prefs.o exit.o tga.o
 EXECUT = tiledriller
+
+ifeq ($(PREFIX),)
+	PREFIX := /usr/local
+endif
 
 
 all: $(OFILES) Makefile
@@ -68,4 +71,5 @@ nice:
 	rm -r *~
 
 install: all
-	cp tiledriller /usr/local/bin/
+	install -Dm755 $(EXECUT) $(DESTDIR)$(PREFIX)/bin/$(EXECUT)
+	install -Dm644 tiledriller.desktop $(DESTDIR)$(PREFIX)/share/applications/tiledriller.desktop
