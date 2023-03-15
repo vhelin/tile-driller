@@ -18,6 +18,8 @@
 #include "png.h"
 
 
+struct tiled_window tilwin;
+
 /* internal functions */
 static void tiled_window_set_title(void);
 static void tiled_zoom_n(GtkWidget *widget, gpointer data);

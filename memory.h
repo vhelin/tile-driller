@@ -34,7 +34,7 @@ struct mem_window {
   int undo_stack_max_depth;
 };
 
-struct mem_window memwin;
+extern struct mem_window memwin;
 
 /* functions */
 void memory_struct_init(void);

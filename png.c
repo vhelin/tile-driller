@@ -11,6 +11,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <png.h>
+#include <zlib.h>
 
 #include "defines.h"
 #include "editor.h"
@@ -88,7 +89,7 @@ int png_load(char *name, int *dx, int *dy, int *bpp, unsigned char **o) {
     depth = 8;
   }
 
-  if (info_ptr->valid & PNG_INFO_tRNS) {
+  if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
     png_set_expand(png_ptr);
     colortype = PNG_COLOR_TYPE_RGBA;
     depth = 8;

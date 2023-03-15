@@ -18,6 +18,8 @@
 #include "png.h"
 
 
+struct pal_window palwin;
+
 /* internal functions */
 static void palette_fg_button_clicked(void);
 static void palette_bg_button_clicked(void);

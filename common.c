@@ -299,7 +299,7 @@ void _common_putpixel(int x, int y, struct td_color *c, struct td_surf *surface)
 }
 
 
-void_common_putpixel_negate(int x, int y, struct td_surf *surface) {
+void _common_putpixel_negate(int x, int y, struct td_surf *surface) {
   
   int i = (y*surface->width + x)<<2;
 

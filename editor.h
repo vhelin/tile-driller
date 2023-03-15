@@ -67,7 +67,7 @@ struct edit_window {
   struct td_color *linecolor;
 };
 
-struct edit_window editwin;
+extern struct edit_window editwin;
 
 /* functions */
 void editor_struct_init(void);
