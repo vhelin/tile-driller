@@ -67,7 +67,6 @@ int main(int argc, char *argv[]) {
   if (__argc > 1)
     editor_file_open((gchar *)__argv[1]);
 #else
-  fprintf(stderr, "%d\n", argc);
   if (argc > 1)
     editor_file_open((gchar *)argv[1]);
 #endif
