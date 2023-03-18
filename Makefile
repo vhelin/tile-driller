@@ -1,7 +1,7 @@
 CC=gcc
 LD=gcc
 
-CFLAGS = -Wall -c -g -O3 -ansi -pedantic `pkg-config --cflags gtk+-2.0`
+CFLAGS = -Wall -c -g -O3 `pkg-config --cflags gtk+-2.0`
 LDFLAGS = `pkg-config --libs gtk+-2.0` -lz -lpng -ljpeg
 
 CFILES = main.c memory.c png.c editor.c common.c palette.c tiled.c jpg.c bmp.c string.c pcx.c prefs.c exit.c tga.c
@@ -15,7 +15,7 @@ endif
 
 
 all: $(OFILES) Makefile
-	$(LD) $(LDFLAGS) $(OFILES) -o $(EXECUT) -lm ; strip $(EXECUT)
+	$(LD) $(OFILES) -o $(EXECUT) -lm $(LDFLAGS) ; strip $(EXECUT)
 
 
 main.o: main.c defines.h

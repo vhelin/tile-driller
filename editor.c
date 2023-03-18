@@ -1212,22 +1212,12 @@ static void editor_file_save_ok(GtkWidget *widget, gpointer data) {
 }
 
 
-static void editor_file_open_ok(GtkWidget *widget, gpointer data) {
+void editor_file_open(gchar *n) {
 
   unsigned char *d;
   int dx, dy, bpp, i, l;
-  gchar *n, tmp[512];
-
-  /* backup the old data */
-  editor_copy_to_undo();
-
-  memory_title_reset(YES);
-
-  n = (gchar *)gtk_file_selection_get_filename(GTK_FILE_SELECTION(editwin.file_selection_open));
-
-  /* hide the file selection window */
-  gtk_widget_hide(editwin.file_selection_open);
-
+  gchar tmp[512];
+  
   /* find the file type */
   for (i = strlen(n)-1; i >= 0; i--) {
     if (n[i] == '.')
@@ -1301,6 +1291,24 @@ static void editor_file_open_ok(GtkWidget *widget, gpointer data) {
 }
 
 
+static void editor_file_open_ok(GtkWidget *widget, gpointer data) {
+
+  gchar *n;
+
+  /* backup the old data */
+  editor_copy_to_undo();
+
+  memory_title_reset(YES);
+
+  n = (gchar *)gtk_file_selection_get_filename(GTK_FILE_SELECTION(editwin.file_selection_open));
+
+  /* hide the file selection window */
+  gtk_widget_hide(editwin.file_selection_open);
+
+  editor_file_open(n);
+}
+  
+
 static void editor_file_save_cancel(GtkWidget *widget, gpointer data) {
 
   gtk_widget_hide(editwin.file_selection_save);
@@ -1311,6 +1319,7 @@ static void editor_file_open_cancel(GtkWidget *widget, gpointer data) {
 
   gtk_widget_hide(editwin.file_selection_open);
 }
+
 
 static void editor_draw_pick(int x, int y) {
 
