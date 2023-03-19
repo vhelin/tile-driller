@@ -52,7 +52,6 @@ static gint memory_motion_notify(GtkWidget *widget, GdkEventButton *event);
 static void memory_copy_to_undo(void);
 static gint memory_key_press(GtkWidget *widget, GdkEventKey *event);
 static gboolean memory_draw_area_expose(GtkWidget *widget, GdkEventExpose *event, gpointer user_data);
-static void memory_file_read(char *n);
 static void memory_change_showgrid(GtkWidget *widget, gpointer data);
 static void memory_set_gridsize_n(GtkWidget *widget, gpointer data);
 
@@ -605,7 +604,7 @@ static void memory_file_open_ok(GtkWidget *widget, gpointer data) {
 }
 
 
-static void memory_file_read(char *n) {
+void memory_file_read(char *n) {
 
   unsigned char *d;
   int dx, dy, bpp, i, l;

@@ -1212,7 +1212,7 @@ static void editor_file_save_ok(GtkWidget *widget, gpointer data) {
 }
 
 
-void editor_file_open(gchar *n) {
+static void editor_file_open(gchar *n) {
 
   unsigned char *d;
   int dx, dy, bpp, i, l;

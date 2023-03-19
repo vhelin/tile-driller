@@ -65,10 +65,10 @@ int main(int argc, char *argv[]) {
 
 #ifdef WIN32
   if (__argc > 1)
-    editor_file_open((gchar *)__argv[1]);
+    memory_file_read(__argv[1]);
 #else
   if (argc > 1)
-    editor_file_open((gchar *)argv[1]);
+    memory_file_read(argv[1]);
 #endif
   
   /* GTK main loop */

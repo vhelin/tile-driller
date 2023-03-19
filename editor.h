@@ -71,7 +71,6 @@ extern struct edit_window editwin;
 
 /* functions */
 void editor_struct_init(void);
-void editor_file_open(gchar *n);
 int editor_window_init(void);
 int editor_window_refresh(void);
 int editor_window_set_title(void);

@@ -51,5 +51,6 @@ void memory_resize_data(int dx, int dy);
 void memory_resize_view(int zoom);
 void memory_window_set_title(void);
 void memory_title_reset(int ents);
+void memory_file_read(char *n);
 
 #endif
